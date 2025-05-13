@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Doughnut Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        canvas {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scott's 16th Birthday</h1>
+        <canvas id="progressChart"></canvas>
+	<!-- <div><h3>What comes next</h3>
+	<ul>
+	<li>Open to Hangaround</li>
+	</ul> --!>
+	
+	</div>
+    </div>
+
+    <script>
+        // Define start date and end date
+        const startDate = new Date('2024-09-17');
+        const endDate = new Date('2025-09-17');
+        const currentDate = new Date();
+
+        // Calculate progress percentage
+        const totalDuration = endDate - startDate; // Total duration in milliseconds
+        const elapsedTime = currentDate - startDate; // Elapsed time in milliseconds
+        const progressPercentage = Math.min(Math.max((elapsedTime / totalDuration) * 100, 0), 100);
+
+        // Create doughnut chart using Chart.js
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        const progressChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Progress', 'Remaining'],
+                datasets: [{
+                    data: [progressPercentage, 100 - progressPercentage],
+                    backgroundColor: ['#4CAF50', '#E0E0E0'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `${tooltipItem.label}: ${tooltipItem.raw.toFixed(2)}%`;
+                            }
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        display: true,
+                        color: '#fff',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        formatter: function(value, context) {
+                            if (context.dataIndex === 0) {
+                                return `${value.toFixed(2)}%`;
+                            }
+                            return '';
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
